@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	https://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	https://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<task:scheduler id="myScheduler" pool-size="10"/>
+
+		<task:scheduled-tasks scheduler="myScheduler">
+			<!--매 30분 마다 시작-->
+			<task:scheduled ref="anotherObject" method="loadIpAddress" cron="*/1 * * * * ?"/>
+		</task:scheduled-tasks>
+		
+	<context:annotation-config/>
+		
+	<context:component-scan base-package="com.kafka.service"></context:component-scan>
+	<context:component-scan base-package="com.kafka.config"></context:component-scan>
+	<context:component-scan base-package="com.kafka.scheduler"></context:component-scan>
+	<context:component-scan base-package="com.kafka.dao"></context:component-scan>
+	
+</beans>
